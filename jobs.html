@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Jobs - JobPortal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">JP</div>
+            <span>JobPortal</span>
+        </a>
+        <nav>
+            <a href="jobs.html">Find Jobs</a>
+            <a href="about.html">Companies</a>
+            <a href="#">Salaries</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn-login">Login</a>
+            <a href="signup.html" class="btn-signup">Sign Up Free</a>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <div class="search-section">
+        <h2 class="search-title">Find your next dream job</h2>
+        <div class="search-container">
+            <div class="search-input-group">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Product Designer" id="jobInput">
+            </div>
+            <div class="search-input-group">
+                <span class="location-icon">📍</span>
+                <input type="text" placeholder="New York, NY" id="locationInput">
+            </div>
+            <button class="search-btn" onclick="performSearch()">Search</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-header">
+                <span class="filter-title">Filters</span>
+                <span class="clear-all" onclick="clearAllFilters()">Clear all</span>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="filter-group">
+                <div class="filter-group-title">Category</div>
+                <div class="filter-options">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="tech" value="Technology" data-filter="category">
+                        <label for="tech">Technology</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="health" value="Healthcare" data-filter="category">
+                        <label for="health">Healthcare</label>
+                    </div>
+                    <div class="checkbox-wrapper" checked>
+                        <input type="checkbox" id="design" value="Design" checked data-filter="category">
+                        <label for="design">Design</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="finance" value="Finance" data-filter="category">
+                        <label for="finance">Finance</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="education" value="Education" data-filter="category">
+                        <label for="education">Education</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Type Filter -->
+            <div class="filter-group">
+                <div class="filter-group-title">Job Type</div>
+                <div class="filter-options">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="fulltime" value="Full-time" checked data-filter="employment">
+                        <label for="fulltime">Full-time</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="contract" value="Contract" data-filter="employment">
+                        <label for="contract">Contract</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="parttime" value="Part-time" data-filter="employment">
+                        <label for="parttime">Part-time</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Filter -->
+            <div class="filter-group">
+                <div class="filter-group-title">Location</div>
+                <div class="filter-options">
+                    <div class="radio-wrapper">
+                        <input type="radio" id="remote" name="location" value="Remote">
+                        <label for="remote">Remote Only</label>
+                    </div>
+                    <div class="radio-wrapper">
+                        <input type="radio" id="onsite" name="location" value="On-site">
+                        <label for="onsite">On-site</label>
+                    </div>
+                    <div class="radio-wrapper">
+                        <input type="radio" id="hybrid" name="location" value="Hybrid">
+                        <label for="hybrid">Hybrid</label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Content Header -->
+            <div class="content-header">
+                <div class="results-info">
+                    Showing <span class="results-count">245 jobs</span>
+                </div>
+                <div class="sort-container">
+                    <span class="sort-label">Sort by:</span>
+                    <select class="sort-select" onchange="handleSort(this.value)">
+                        <option value="relevant">Most Relevant</option>
+                        <option value="recent">Most Recent</option>
+                        <option value="salary-high">Highest Salary</option>
+                        <option value="salary-low">Lowest Salary</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Job Listings (populated dynamically via script.js) -->
+            <div class="job-listings" id="jobListings">
+                <div class="jobs-loading">Loading jobs…</div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn" onclick="changePage(0)">←</button>
+                <button class="page-btn active" onclick="changePage(1)">1</button>
+                <button class="page-btn" onclick="changePage(2)">2</button>
+                <button class="page-btn" onclick="changePage(3)">3</button>
+                <span style="padding: 0 0.5rem;">...</span>
+                <button class="page-btn" onclick="changePage(8)">8</button>
+                <button class="page-btn" onclick="changePage(1)">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="jobDatabase.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

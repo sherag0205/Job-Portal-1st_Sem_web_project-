@@ -1,0 +1,419 @@
+// ========== GLOBAL FUNCTIONS ==========
+function toggleBookmark(element, event) {
+    if (event) event.stopPropagation();
+    element.classList.toggle('active');
+}
+
+function performSearch() {
+    const jobInput = document.getElementById('jobInput')?.value || '';
+    const locationInput = document.getElementById('locationInput')?.value || '';
+
+    if (!jobInput && !locationInput) {
+        alert('Please enter a job title or location');
+        return;
+    }
+
+    // Use sessionStorage for one-time searches so results don't persist repeatedly
+    sessionStorage.setItem('searchJob', jobInput);
+    sessionStorage.setItem('searchLocation', locationInput);
+
+    // If already on jobs page, refresh filters and consume the session search
+    if (window.location.pathname.includes('jobs.html')) {
+        filterAndDisplayJobs();
+        // Clear one-time session search and any persistent localStorage search keys
+        sessionStorage.removeItem('searchJob');
+        sessionStorage.removeItem('searchLocation');
+        localStorage.removeItem('searchJob');
+        localStorage.removeItem('searchLocation');
+    } else {
+        window.location.href = 'jobs.html';
+    }
+}
+
+function handleSort(value) {
+    if (window.location.pathname.includes('jobs.html')) {
+        filterAndDisplayJobs();
+    }
+}
+
+function changePage(page) {
+    const pageButtons = document.querySelectorAll('.page-btn');
+    pageButtons.forEach(btn => btn.classList.remove('active'));
+    if (page > 0 && page < pageButtons.length - 1) {
+        pageButtons[page].classList.add('active');
+    }
+}
+
+function clearAllFilters() {
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.checked = false;
+    });
+    
+    if (document.getElementById('jobListings')) {
+        filterAndDisplayJobs();
+    }
+}
+
+// ========== JOB NAVIGATION & FILTERING ==========
+function selectJob(jobId) {
+    const job = jobsDatabase.find(j => j.id === jobId);
+    if (job) {
+        localStorage.setItem('selectedJob', JSON.stringify(job));
+        window.location.href = 'job-detail.html';
+    }
+}
+
+function getSelectedJob() {
+    const jobStr = localStorage.getItem('selectedJob');
+    return jobStr ? JSON.parse(jobStr) : null;
+}
+
+function displayJobDetails() {
+    const job = getSelectedJob();
+    if (!job) {
+        window.location.href = 'jobs.html';
+        return;
+    }
+    
+    const detailContainer = document.querySelector('.job-detail-container');
+    if (detailContainer) {
+        const detailsHTML = `
+            <div style="animation: slideUp 0.6s ease;">
+                <div class="job-detail-header">
+                    <div class="job-detail-title">
+                        <div class="job-detail-avatar" style="background: ${job.avatarGradient};">${job.avatar}</div>
+                        <div class="job-detail-info">
+                            <h1>${job.title}</h1>
+                            <div class="job-detail-company">${job.company} • ${job.location} (${job.type})</div>
+                            <div class="job-detail-meta">
+                                <span class="detail-meta-item meta-salary">💰 ${job.salary}/year</span>
+                                <span class="detail-meta-item">💼 ${job.category}</span>
+                                <span class="detail-meta-item">🌍 ${job.type}</span>
+                                <span class="detail-meta-item">⭐ Senior Level</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-apply" onclick="alert('Successfully applied for ${job.title} at ${job.company}! ✓')" style="transition: all 0.3s; cursor: pointer;">Easy Apply</button>
+                </div>
+
+                <div class="job-detail-content">
+                    <div class="detail-section" style="animation: fadeIn 0.6s ease 0.1s both;">
+                        <h3>Job Description</h3>
+                        <p>${job.fullDescription}</p>
+                    </div>
+
+                    <div class="detail-section" style="animation: fadeIn 0.6s ease 0.2s both;">
+                        <h3>Requirements</h3>
+                        <ul class="requirements-list">
+                            ${job.requirements.map(req => `<li style="animation: slideIn 0.5s ease;">✓ ${req}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="detail-section" style="animation: fadeIn 0.6s ease 0.3s both;">
+                        <h3>Benefits & Perks</h3>
+                        <div class="benefits-grid">
+                            ${job.benefits.map((benefit, idx) => `<div class="benefit-card" style="animation: pop 0.4s ease ${0.3 + idx * 0.1}s both;">✓ ${benefit}</div>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        detailContainer.innerHTML = detailsHTML;
+    }
+}
+
+function filterAndDisplayJobs() {
+    const container = document.getElementById('jobListings');
+    if (!container) return;
+
+    // Get filter values
+    const selectedCategories = Array.from(document.querySelectorAll('input[data-filter="category"]:checked'))
+        .map(cb => cb.value)
+        .filter(val => jobsDatabase.some(job => job.category === val));
+    
+    const selectedLocation = document.querySelector('input[type="radio"]:checked')?.value;
+    const sortBy = document.querySelector('.sort-select')?.value || 'relevant';
+    // Prefer sessionSearch (one-time) then fall back to persistent localStorage
+    const sessionSearchJob = sessionStorage.getItem('searchJob');
+    const sessionSearchLocation = sessionStorage.getItem('searchLocation');
+    const searchJob = (sessionSearchJob ?? localStorage.getItem('searchJob') ?? '').toLowerCase();
+    const searchLocation = (sessionSearchLocation ?? localStorage.getItem('searchLocation') ?? '').toLowerCase();
+
+    // If we consumed session search params, remove them so the search only applies once
+    if (sessionSearchJob !== null || sessionSearchLocation !== null) {
+        sessionStorage.removeItem('searchJob');
+        sessionStorage.removeItem('searchLocation');
+        // Also clear any persistent search used previously to ensure history cleared
+        localStorage.removeItem('searchJob');
+        localStorage.removeItem('searchLocation');
+    }
+
+    // Filter jobs
+    let filtered = jobsDatabase.filter(job => {
+        const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(job.category);
+        const matchesLocation = !selectedLocation || job.type === selectedLocation;
+        const matchesSearchJob = !searchJob || job.title.toLowerCase().includes(searchJob) || job.company.toLowerCase().includes(searchJob);
+        const matchesSearchLocation = !searchLocation || job.location.toLowerCase().includes(searchLocation);
+        
+        return matchesCategory && matchesLocation && matchesSearchJob && matchesSearchLocation;
+    });
+
+    // Sort jobs
+    switch(sortBy) {
+        case 'recent':
+            filtered.sort((a, b) => new Date(b.posted) - new Date(a.posted));
+            break;
+        case 'salary-high':
+            filtered.sort((a, b) => {
+                const salaryA = parseInt(b.salary.split('-')[0].replace(/[^\d]/g, '')) * 1000;
+                const salaryB = parseInt(a.salary.split('-')[0].replace(/[^\d]/g, '')) * 1000;
+                return salaryA - salaryB;
+            });
+            break;
+        case 'salary-low':
+            filtered.sort((a, b) => {
+                const salaryA = parseInt(a.salary.split('-')[0].replace(/[^\d]/g, '')) * 1000;
+                const salaryB = parseInt(b.salary.split('-')[0].replace(/[^\d]/g, '')) * 1000;
+                return salaryA - salaryB;
+            });
+            break;
+    }
+
+    // Display results with animations
+    container.innerHTML = filtered.map((job, idx) => `
+        <div class="job-card" onclick="selectJob(${job.id})" style="cursor: pointer; transition: all 0.3s; animation: slideUp 0.5s ease ${idx * 0.05}s both; transform: translateY(0);" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="job-avatar" style="background: ${job.avatarGradient};">${job.avatar}</div>
+            <div class="job-info">
+                <div class="job-title">${job.title}</div>
+                <div class="company-name">${job.company}</div>
+                <div class="job-meta">
+                    <span class="meta-item meta-location">📍 ${job.location} (${job.type})</span>
+                    <span class="meta-item meta-salary">💰 ${job.salary}</span>
+                    <span class="meta-item meta-badge">Posted ${job.posted}</span>
+                </div>
+                <div class="job-description">${job.description}</div>
+                <div class="job-actions">
+                    <button class="btn-apply" onclick="event.stopPropagation(); selectJob(${job.id})">Easy Apply ➤</button>
+                </div>
+            </div>
+            <span class="bookmark-btn" onclick="toggleBookmark(this, event)">🔖</span>
+        </div>
+    `).join('');
+
+    // Update results count
+    const resultsCount = document.querySelector('.results-count');
+    if (resultsCount) {
+        resultsCount.textContent = `${filtered.length} jobs`;
+    }
+}
+
+// ========== REAL-TIME FILTER LISTENER ==========
+function initJobFilters() {
+    // Category & employment filters (listen for changes but only category is used for filtering)
+    document.querySelectorAll('input[data-filter="category"], input[data-filter="employment"]').forEach(checkbox => {
+        checkbox.addEventListener('change', filterAndDisplayJobs);
+    });
+
+    // Location filters
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', filterAndDisplayJobs);
+    });
+
+    // Sort
+    const sortSelect = document.querySelector('.sort-select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', filterAndDisplayJobs);
+    }
+
+    // Display jobs on page load
+    if (document.getElementById('jobListings')) {
+        filterAndDisplayJobs();
+    }
+}
+
+// FAQ Accordion
+function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        item.addEventListener('click', () => {
+            faqItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+}
+
+// Auth Tabs
+function initAuthTabs() {
+    const authTabs = document.querySelectorAll('.auth-tab');
+    authTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            authTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        });
+    });
+}
+
+// Password toggle
+function initPasswordToggle() {
+    const toggleBtns = document.querySelectorAll('.password-toggle');
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const input = btn.previousElementSibling;
+            if (input && input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '👁️‍🗨️';
+            } else if (input) {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        });
+    });
+}
+
+// Search functionality
+function initSearch() {
+    const jobInput = document.getElementById('jobInput');
+    const locationInput = document.getElementById('locationInput');
+    
+    if (jobInput) jobInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch();
+    });
+    
+    if (locationInput) locationInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch();
+    });
+}
+
+// Header scroll effect
+function initHeaderScroll() {
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', () => {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const header = document.querySelector('header');
+        
+        if (scrollTop > 100) {
+            header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+        } else {
+            header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+        }
+        lastScrollTop = scrollTop;
+    });
+}
+
+// Tags functionality
+function initTags() {
+    document.querySelectorAll('.tag').forEach(tag => {
+        tag.addEventListener('click', () => {
+            const jobInput = document.getElementById('jobInput');
+            if (jobInput) {
+                jobInput.value = tag.textContent;
+            }
+        });
+    });
+}
+
+// Category cards
+function initCategoryCards() {
+    document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const categoryName = card.querySelector('h3').textContent;
+            alert(`Showing jobs in ${categoryName}`);
+        });
+    });
+}
+
+// Contact form
+function initContactForm() {
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        const submitBtn = contactForm.querySelector('.send-btn') || contactForm.querySelector('button');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const fullName = document.querySelector('input[name="full_name"]')?.value;
+                const email = document.querySelector('input[name="email"]')?.value;
+                const message = document.querySelector('textarea[name="message"]')?.value;
+                
+                if (fullName && email && message) {
+                    alert(`Thank you ${fullName}! We'll contact you at ${email} soon.`);
+                    contactForm.reset();
+                } else {
+                    alert('Please fill in all fields');
+                }
+            });
+        }
+    }
+}
+
+// Auth handlers
+function initAuthHandlers() {
+    const loginBtn = document.querySelector('.login-btn');
+    const signupBtn = document.querySelector('.signup-btn');
+    
+    if (loginBtn) {
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.querySelector('input[name="email"]')?.value;
+            const password = document.querySelector('input[name="password"]')?.value;
+            
+            if (email && password) {
+                alert(`Welcome back! Logging in as ${email}`);
+                window.location.href = 'index.html';
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+    }
+    
+    if (signupBtn) {
+        signupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const fullName = document.querySelector('input[name="full_name"]')?.value;
+            const email = document.querySelector('input[name="email"]')?.value;
+            const password = document.querySelector('input[name="password"]')?.value;
+            
+            if (fullName && email && password) {
+                alert(`Account created successfully for ${fullName}!`);
+                window.location.href = 'index.html';
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+    }
+}
+
+// Smooth scrolling
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href !== '#' && document.querySelector(href)) {
+                e.preventDefault();
+                document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+}
+
+// Initialize all on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    initHeaderScroll();
+    initSearch();
+    initJobFilters();
+    initTags();
+    initCategoryCards();
+    initFAQ();
+    initAuthTabs();
+    initPasswordToggle();
+    initContactForm();
+    initAuthHandlers();
+    initSmoothScroll();
+    
+    // Display job details if on job-detail page
+    if (window.location.pathname.includes('job-detail.html')) {
+        displayJobDetails();
+    }
+});

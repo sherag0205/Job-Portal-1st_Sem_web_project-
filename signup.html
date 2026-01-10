@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - JobPortal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animations.css">
+    <style>
+        .signup-body {
+            background: #F5F7FA;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #E0E6ED;
+            border-radius: 2px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: #4A90E2;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="signup-body">
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">JP</div>
+            <span>JobPortal</span>
+        </a>
+        <div style="margin-left: auto; color: #666;">
+            Already have an account? <a href="login.html" style="color: #4A90E2; font-weight: 600; text-decoration: none;">Sign In</a>
+        </div>
+    </header>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Step 1: Account Information -->
+            <div id="step1" style="display: block;">
+                <div style="color: #4A90E2; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;">Step 1 of 2</div>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" style="width: 50%;"></div>
+                </div>
+
+                <div class="auth-header">
+                    <h1 style="font-size: 1.8rem;">Let's get started</h1>
+                    <p>Create your free account to find your next career or candidate.</p>
+                </div>
+
+                <div class="social-login" style="margin: 2rem 0;">
+                    <button type="button" class="social-btn">🔵 Continue with Google</button>
+                    <button type="button" class="social-btn">💼 Continue with LinkedIn</button>
+                </div>
+
+                <div class="divider">
+                    <span>OR CONTINUE WITH</span>
+                </div>
+
+                <form id="step1Form" onsubmit="goToStep2(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="fullName" name="full_name" placeholder="e.g. Jane Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" id="passwordInputStep1" name="password" placeholder="At least 8 characters" required style="flex: 1; padding-right: 40px;">
+                            <button type="button" class="password-toggle" style="position: absolute; right: 10px; background: none; border: none; cursor: pointer; font-size: 1rem; padding: 0;" onclick="togglePasswordStep1()">👁️</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; margin-top: 1rem;">Next Step</button>
+                </form>
+
+                <div class="signup-agreement">
+                    By clicking "Next Step", you agree to our <a href="#" style="text-decoration: none;">Terms</a> and <a href="#" style="text-decoration: none;">Privacy Policy</a>
+                </div>
+            </div>
+
+            <!-- Step 2: Role Selection -->
+            <div id="step2" style="display: none;">
+                <div style="color: #4A90E2; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;">Step 2 of 2</div>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" style="width: 100%;"></div>
+                </div>
+
+                <button type="button" onclick="goBackToStep1()" style="background: none; border: none; color: #4A90E2; cursor: pointer; margin-bottom: 1rem; font-weight: 600; padding: 0; font-size: 1rem;">← Back</button>
+
+                <div class="auth-header">
+                    <h1 style="font-size: 1.8rem;">Role Selection</h1>
+                    <p>How do you want to use the platform?</p>
+                </div>
+
+                <form id="step2Form" onsubmit="handleSignup(event)">
+                    <div style="margin: 2rem 0;">
+                        <div class="role-option" id="jobSeekerRole" onclick="selectRole('job-seeker')" style="border: 2px solid #4A90E2; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; cursor: pointer; background: rgba(74, 144, 226, 0.05); transition: all 0.3s;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="font-size: 1.5rem;">👤</span>
+                                <div style="flex: 1;">
+                                    <strong>Job Seeker</strong>
+                                    <div style="color: #999; font-size: 0.85rem;">I'm looking for a new job or project.</div>
+                                </div>
+                                <span style="color: #4A90E2; font-size: 1.2rem;">✓</span>
+                            </div>
+                        </div>
+
+                        <div class="role-option" id="employerRole" onclick="selectRole('employer')" style="border: 2px solid #E0E6ED; padding: 1.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="font-size: 1.5rem;">🏢</span>
+                                <div style="flex: 1;">
+                                    <strong>Employer</strong>
+                                    <div style="color: #999; font-size: 0.85rem;">I'm hiring talent for my company.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="userRole" name="userRole" value="job-seeker">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; margin-top: 2rem;">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: auto;">
+        <div class="footer-bottom" style="border-top: 1px solid #E0E6ED; background: white;">
+            <span>© 2024 JobPortal Inc. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        function goToStep2(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('passwordInputStep1').value;
+
+            if (!fullName || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters');
+                return;
+            }
+
+            // Store data in session
+            sessionStorage.setItem('signup_fullName', fullName);
+            sessionStorage.setItem('signup_email', email);
+            sessionStorage.setItem('signup_password', password);
+
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+        }
+
+        function goBackToStep1() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+        }
+
+        function selectRole(role) {
+            document.getElementById('userRole').value = role;
+            
+            const jobSeekerRole = document.getElementById('jobSeekerRole');
+            const employerRole = document.getElementById('employerRole');
+
+            if (role === 'job-seeker') {
+                jobSeekerRole.style.borderColor = '#4A90E2';
+                jobSeekerRole.style.background = 'rgba(74, 144, 226, 0.05)';
+                employerRole.style.borderColor = '#E0E6ED';
+                employerRole.style.background = 'transparent';
+            } else {
+                jobSeekerRole.style.borderColor = '#E0E6ED';
+                jobSeekerRole.style.background = 'transparent';
+                employerRole.style.borderColor = '#4A90E2';
+                employerRole.style.background = 'rgba(74, 144, 226, 0.05)';
+            }
+        }
+
+        function togglePasswordStep1() {
+            const input = document.getElementById('passwordInputStep1');
+            const btn = event.target;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            const fullName = sessionStorage.getItem('signup_fullName');
+            const email = sessionStorage.getItem('signup_email');
+            const userRole = document.getElementById('userRole').value;
+
+            alert(`Account created successfully!\n\nName: ${fullName}\nEmail: ${email}\nRole: ${userRole === 'job-seeker' ? 'Job Seeker' : 'Employer'}`);
+            
+            // Clear session data
+            sessionStorage.clear();
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 500);
+        }
+
+        // Initialize role selection on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            selectRole('job-seeker');
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+    <script>
+        function goToStep2() {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+        }
+
+        function goToStep1() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

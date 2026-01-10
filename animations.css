@@ -1,0 +1,266 @@
+
+/* ========== ANIMATIONS & TRANSITIONS ========== */
+
+/* Slide Up Animation */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide In Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Pop Animation */
+@keyframes pop {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Scale Up Animation */
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Enhanced Job Card Animations */
+.job-card {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.job-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 15px 40px rgba(74, 144, 226, 0.2) !important;
+}
+
+/* Category Card Animations */
+.category-card {
+    transition: all 0.3s ease !important;
+    animation: slideUp 0.6s ease forwards;
+}
+
+.category-card:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Testimonial Card Animations */
+.testimonial-card {
+    animation: slideUp 0.6s ease forwards;
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth Button Transitions */
+button, .btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+button:hover, .btn:hover {
+    transform: translateY(-2px) !important;
+}
+
+button:active, .btn:active {
+    transform: translateY(0) !important;
+}
+
+/* Input Focus Animation */
+input:focus, textarea:focus, select:focus {
+    animation: scaleUp 0.3s ease;
+}
+
+/* Badge Animation */
+.badge {
+    animation: slideUp 0.6s ease 0.1s both;
+}
+
+/* Benefits Grid Animation */
+.benefit-card {
+    animation: pop 0.5s ease-out both;
+}
+
+/* Requirements List Animation */
+.requirements-list li {
+    animation: slideIn 0.5s ease forwards;
+}
+
+.requirements-list li:nth-child(1) { animation-delay: 0.1s; }
+.requirements-list li:nth-child(2) { animation-delay: 0.2s; }
+.requirements-list li:nth-child(3) { animation-delay: 0.3s; }
+.requirements-list li:nth-child(4) { animation-delay: 0.4s; }
+.requirements-list li:nth-child(5) { animation-delay: 0.5s; }
+
+/* Detail Section Animations */
+.detail-section {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.detail-section:nth-child(1) { animation-delay: 0.1s; }
+.detail-section:nth-child(2) { animation-delay: 0.2s; }
+.detail-section:nth-child(3) { animation-delay: 0.3s; }
+
+/* Hero Content Animation */
+.hero-content {
+    animation: slideUp 0.7s ease;
+}
+
+.hero-card {
+    animation: slideUp 0.7s ease 0.2s both;
+}
+
+/* Stats Animation */
+.stat-item {
+    animation: slideUp 0.6s ease forwards;
+}
+
+.stat-item:nth-child(1) { animation-delay: 0.1s; }
+.stat-item:nth-child(2) { animation-delay: 0.2s; }
+.stat-item:nth-child(3) { animation-delay: 0.3s; }
+.stat-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* Bookmark Animation */
+.bookmark-btn {
+    transition: all 0.3s ease;
+}
+
+.bookmark-btn:hover {
+    animation: bounce 0.4s ease;
+}
+
+.bookmark-btn.active {
+    animation: pop 0.4s ease;
+}
+
+/* Header Navigation Link Animation */
+nav a {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #4A90E2;
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* Page Transition Animation */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/* Loading Pulse Animation */
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Smooth Transitions on Page Load */
+body {
+    animation: fadeIn 0.5s ease;
+}
+
+/* Responsive Design Enhancements for Animations */
+@media (max-width: 1024px) {
+    .job-card {
+        animation: slideUp 0.5s ease;
+    }
+    
+    .detail-section {
+        animation: fadeIn 0.5s ease;
+    }
+}
+
+@media (max-width: 768px) {
+    .job-card {
+        animation: slideUp 0.4s ease;
+    }
+    
+    .hero {
+        animation: fadeIn 0.6s ease;
+    }
+    
+    .detail-section {
+        animation: fadeIn 0.4s ease;
+    }
+    
+    button {
+        transition: all 0.2s ease;
+    }
+    
+    button:hover {
+        transform: translateY(-1px);
+    }
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPortal - Find Your Dream Job</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">JP</div>
+            <span>JobPortal</span>
+        </a>
+        <nav>
+            <a href="jobs.html">Find Jobs</a>
+            <a href="about.html">Companies</a>
+            <a href="#">Salaries</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn-login">Login</a>
+            <a href="signup.html" class="btn-signup">Sign Up Free</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">OVER 2,450+ JOBS ADDED TODAY</div>
+            <h1>Launch Your <span class="highlight">Career</span> To New Heights.</h1>
+            <p class="hero-description">The smarter way to find your next role. Connect with top companies and build your professional future with AI-powered matching.</p>
+            
+            <div class="search-bar">
+                <input type="text" class="search-input" id="jobInput" placeholder="Job title or key">
+                <input type="text" class="search-input" id="locationInput" placeholder="Remote or City">
+                <button class="btn-find" onclick="performSearch()">Find Jobs</button>
+            </div>
+
+            <div class="popular-tags">
+                <span>Popular:</span>
+                <span class="tag">UI/UX</span>
+                <span class="tag">React</span>
+                <span class="tag">Marketing</span>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <div class="job-card">
+                <div class="job-badge">💼 CAREER PROGRESS</div>
+                <div class="salary-info">
+                    <div class="salary-label">MONTHLY SALARY</div>
+                    <div class="salary-amount">$12,500</div>
+                    <div class="salary-increase">📈 +45% Salary Inc.</div>
+                </div>
+                <div class="job-company">
+                    <div class="company-avatar">G</div>
+                    <div class="company-info">
+                        <strong>Hired at Google</strong>
+                        <span>Jun 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stat-item">
+            <div class="stat-number blue">100k+</div>
+            <div class="stat-label">ACTIVE JOBS</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number purple">50k+</div>
+            <div class="stat-label">COMPANIES</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number pink">2M+</div>
+            <div class="stat-label">CANDIDATES</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number teal">5k+</div>
+            <div class="stat-label">DAILY NEW JOBS</div>
+        </div>
+    </section>
+
+    <!-- Explore by Category -->
+    <section class="explore">
+        <div class="section-header">
+            <div>
+                <h2>Explore by Category</h2>
+                <p class="section-subtitle">Tailored opportunities in every professional domain. Start your search by selecting a field you excel in.</p>
+            </div>
+            <a href="jobs.html" class="view-all">View all categories →</a>
+        </div>
+
+        <div class="categories">
+            <div class="category-card">
+                <div class="category-icon">💻</div>
+                <h3>Engineering</h3>
+                <p>1,200+ open roles</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🎨</div>
+                <h3>Design</h3>
+                <p>850+ open roles</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">📈</div>
+                <h3>Sales</h3>
+                <p>2,100+ open roles</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">📢</div>
+                <h3>Marketing</h3>
+                <p>950+ open roles</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="testimonials-header">
+            <h2>Trusted by Professionals</h2>
+            <p>Real stories from people who found their career path with us.</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Found my current role as a Senior Engineer within just two weeks of signing up. The filtering options are way ahead of any other platform I've used."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AR</div>
+                    <div class="author-info">
+                        <strong>Alex Rodriguez</strong>
+                        <span>Software Engineer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"We've hired 5 new designers this quarter using JobPortal. The quality of applicants is consistently higher compared to other major job boards."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SJ</div>
+                    <div class="author-info">
+                        <strong>Sarah Jenkins</strong>
+                        <span>Design Lead</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"The career advice blog helped me polish my resume and prepare for interviews. I felt much more confident going into the process."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MT</div>
+                    <div class="author-info">
+                        <strong>Michael Thompson</strong>
+                        <span>Marketing Specialist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <div class="footer-logo-icon">JP</div>
+                    JobPortal
+                </div>
+                <p class="footer-desc">The world's leading professional network for finding your next career milestone and connecting with top talent.</p>
+                <div class="footer-social">
+                    <div class="social-icon">f</div>
+                    <div class="social-icon">𝕏</div>
+                    <div class="social-icon">in</div>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>For Job Seekers</h4>
+                <div class="footer-links">
+                    <a href="jobs.html">Browse Jobs</a>
+                    <a href="#">Career Advice</a>
+                    <a href="#">Salary Tools</a>
+                    <a href="#">Resume Builder</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>For Employers</h4>
+                <div class="footer-links">
+                    <a href="#">Post a Job</a>
+                    <a href="#">Hiring Solutions</a>
+                    <a href="#">Pricing Plans</a>
+                    <a href="#">Talent Pool</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Our Company</h4>
+                <div class="footer-links">
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Language</h4>
+                <div class="footer-links">
+                    <a href="#">English (US)</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2024 JobPortal Inc. All rights reserved.</span>
+            <div class="footer-bottom-right">English (US) • Cookies</div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
