@@ -66,10 +66,6 @@ nav a {
     transition: color 0.3s;
 }
 
-nav a:hover {
-    color: #4A90E2;
-}
-
 .header-nav {
     display: flex;
     gap: 2rem;
@@ -83,10 +79,6 @@ nav a:hover {
     color: #666;
     font-size: 0.95rem;
     transition: color 0.3s;
-}
-
-.header-nav a:hover {
-    color: #4A90E2;
 }
 
 .auth-buttons, .header-icons {
@@ -282,10 +274,6 @@ footer {
     transition: color 0.3s;
 }
 
-.footer-links a:hover {
-    color: #4A90E2;
-}
-
 .footer-bottom {
     border-top: 1px solid #000000;
     padding-top: 1.5rem;
@@ -407,10 +395,6 @@ h1 .highlight {
     transition: all 0.3s;
 }
 
-.btn-find:hover {
-    background: #357ABD;
-}
-
 .popular-tags {
     display: flex;
     gap: 1rem;
@@ -433,14 +417,21 @@ h1 .highlight {
     transition: all 0.3s;
 }
 
-.tag:hover {
-    background: rgba(74, 144, 226, 0.2);
-    color: #4A90E2;
-}
-
 /* Hero Card */
 .hero-card {
     position: relative;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-card img {
+    max-width: 60%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
 }
 
 .job-card {
@@ -653,6 +644,11 @@ h2 {
     font-size: 1.8rem;
 }
 
+.category-icon img {
+    width: 40px;
+    height: 40px;
+}
+
 .category-card h3 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
@@ -698,9 +694,13 @@ h2 {
 }
 
 .stars {
-    color: #FFD700;
-    font-size: 1rem;
     margin-bottom: 1rem;
+}
+
+.stars img {
+    width: 120px;
+    height: auto;
+    display: block;
 }
 
 .testimonial-text {
@@ -1727,10 +1727,6 @@ h2 {
     text-decoration: none;
 }
 
-.remember-forgot a:hover {
-    text-decoration: underline;
-}
-
 .signup-agreement {
     font-size: 0.8rem;
     color: #999;
@@ -1936,6 +1932,11 @@ h2 {
         padding: 3rem 1rem;
     }
 
+    .hero-card {
+        order: -1; /* Move image above content on smaller screens */
+        margin-bottom: 2rem;
+    }
+
     .categories {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -2066,6 +2067,10 @@ h2 {
 
     .testimonials-grid {
         grid-template-columns: 1fr;
+    }
+
+    .stars img {
+        width: 100px;
     }
 
     .stats {

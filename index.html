@@ -6,6 +6,7 @@
     <title>JobPortal - Find Your Dream Job</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="animations.css">
+    <script src="animations.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -47,33 +48,33 @@
         </div>
 
         <div class="hero-card">
-                <!-- add image -->
+            <img src="./assests/Boy.png" alt="Hero Image">
         </div>
     </section>
 
     <!-- Stats Section -->
-    <section class="stats">
-        <div class="stat-item">
+    <section class="stats scroll-fade-in">
+        <div class="stat-item scroll-scale-up">
             <div class="stat-number blue">100k+</div>
             <div class="stat-label">ACTIVE JOBS</div>
         </div>
-        <div class="stat-item">
+        <div class="stat-item scroll-scale-up">
             <div class="stat-number purple">50k+</div>
             <div class="stat-label">COMPANIES</div>
         </div>
-        <div class="stat-item">
+        <div class="stat-item scroll-scale-up">
             <div class="stat-number pink">2M+</div>
             <div class="stat-label">CANDIDATES</div>
         </div>
-        <div class="stat-item">
+        <div class="stat-item scroll-scale-up">
             <div class="stat-number teal">5k+</div>
             <div class="stat-label">DAILY NEW JOBS</div>
         </div>
     </section>
 
     <!-- Explore by Category -->
-    <section class="explore">
-        <div class="section-header">
+    <section class="explore scroll-fade-in">
+        <div class="section-header scroll-slide-left">
             <div>
                 <h2>Explore by Category</h2>
                 <p class="section-subtitle">Tailored opportunities in every professional domain. Start your search by selecting a field you excel in.</p>
@@ -82,23 +83,23 @@
         </div>
 
         <div class="categories">
-            <div class="category-card">
-                <div class="category-icon"><!--add icone --></div>
-                <h3>Engineering</h3>
+            <div class="category-card scroll-rotate-in">
+                <div class="category-icon"><img src="./assests//category/Web Developer.png" alt="Web Developer"></div>
+                <h3>Web Development</h3> 
                 <p>1,200+ open roles</p>
             </div>
-            <div class="category-card">
-                <div class="category-icon"><!--add icone --></div>
+            <div class="category-card scroll-rotate-in">
+                <div class="category-icon"><img src="./assests//category/UI-UX Designer.png" alt="Designer"></div>
                 <h3>Design</h3>
                 <p>850+ open roles</p>
             </div>
-            <div class="category-card">
-                <div class="category-icon"><!--add icone --></div>
+            <div class="category-card scroll-rotate-in">
+                <div class="category-icon"><img src="./assests//category/Sales.png" alt="Sales"></div>
                 <h3>Sales</h3>
                 <p>2,100+ open roles</p>
             </div>
-            <div class="category-card">
-                <div class="category-icon"><!--add icone --></div>
+            <div class="category-card scroll-rotate-in">
+                <div class="category-icon"><img src="./assests//category/Digital Marketing.png" alt="Marketing"></div>
                 <h3>Marketing</h3>
                 <p>950+ open roles</p>
             </div>
@@ -106,15 +107,15 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="testimonials-header">
+    <section class="testimonials scroll-fade-in">
+        <div class="testimonials-header scroll-slide-right">
             <h2>Trusted by Professionals</h2>
             <p>Real stories from people who found their career path with us.</p>
         </div>
 
         <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <div class="stars"><!-- add rating --></div>
+            <div class="testimonial-card scroll-scale-up">
+                <div class="stars"><img src="/assests/ratings.png" alt="Rating"></div>
                 <p class="testimonial-text">"Found my current role as a Senior Engineer within just two weeks of signing up. The filtering options are way ahead of any other platform I've used."</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">AR</div>
@@ -125,8 +126,8 @@
                 </div>
             </div>
 
-            <div class="testimonial-card">
-                <div class="stars"><!-- add rating --></div>
+            <div class="testimonial-card scroll-scale-up">
+                <div class="stars"><img src="/assests/ratings.png" alt="Rating"></div>
                 <p class="testimonial-text">"We've hired 5 new designers this quarter using JobPortal. The quality of applicants is consistently higher compared to other major job boards."</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">SJ</div>
@@ -137,8 +138,8 @@
                 </div>
             </div>
 
-            <div class="testimonial-card">
-                <div class="stars"><!-- add rating --></div>
+            <div class="testimonial-card scroll-scale-up">
+                <div class="stars"><img src="/assests/ratings.png" alt="Rating"></div>
                 <p class="testimonial-text">"The career advice blog helped me polish my resume and prepare for interviews. I felt much more confident going into the process."</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">MT</div>
@@ -152,9 +153,9 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="scroll-fade-in">
         <div class="footer-content">
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <div class="footer-brand">
                     <div class="footer-logo-icon">JP</div>
                     JobPortal
@@ -167,7 +168,7 @@
                 </div>
             </div>
 
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <h4>For Job Seekers</h4>
                 <div class="footer-links">
                     <a href="jobs.html">Browse Jobs</a>
@@ -177,7 +178,7 @@
                 </div>
             </div>
 
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <h4>For Employers</h4>
                 <div class="footer-links">
                     <a href="#">Post a Job</a>
@@ -187,7 +188,7 @@
                 </div>
             </div>
 
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <h4>Our Company</h4>
                 <div class="footer-links">
                     <a href="about.html">About Us</a>
@@ -197,7 +198,7 @@
                 </div>
             </div>
 
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <h4>Language</h4>
                 <div class="footer-links">
                     <a href="#">English (US)</a>
@@ -206,7 +207,7 @@
             </div>
         </div>
 
-        <div class="footer-bottom">
+        <div class="footer-bottom scroll-slide-up">
             <span>© 2024 JobPortal Inc. All rights reserved.</span>
             <div class="footer-bottom-right">English (US) • Cookies</div>
         </div>

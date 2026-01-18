@@ -23,6 +23,18 @@
     }
 }
 
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Slide In Animation */
 @keyframes slideIn {
     from {
@@ -32,6 +44,34 @@
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+/* Slide In Right Animation */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide In Right Smooth Animation */
+@keyframes slideInRightSmooth {
+    0% {
+        opacity: 0;
+        transform: translateX(30px) scale(0.95);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateX(10px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
     }
 }
 
@@ -45,6 +85,18 @@
         transform: scale(1.05);
     }
     100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Scale In Animation */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
         opacity: 1;
         transform: scale(1);
     }
@@ -82,104 +134,466 @@
     }
 }
 
+/* Float Animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Rotate In Animation */
+@keyframes rotateIn {
+    from {
+        opacity: 0;
+        transform: rotate(-10deg) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* Glow Animation */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(74, 144, 226, 0.8), 0 0 30px rgba(74, 144, 226, 0.6);
+    }
+}
+
+/* Counter Animation */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========== SCROLL-TRIGGERED ANIMATIONS ========== */
+
+/* Scroll Animation Classes */
+.scroll-fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-fade-in.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-slide-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-slide-left.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-slide-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-slide-right.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-scale-up {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-scale-up.animate {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.scroll-rotate-in {
+    opacity: 0;
+    transform: rotate(-10deg) scale(0.9);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-rotate-in.animate {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.scroll-slide-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-slide-up.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger Animation Classes */
+.stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.stagger-item.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========== ENHANCED ANIMATIONS ========== */
+
+/* Scale Up Animation */
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ========== ENHANCED ANIMATIONS ========== */
+
 /* Enhanced Job Card Animations */
 .job-card {
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.job-card:hover::before {
+    left: 100%;
 }
 
 .job-card:hover {
-    transform: translateY(-8px) !important;
+    transform: translateY(-8px) scale(1.02) !important;
     box-shadow: 0 15px 40px rgba(74, 144, 226, 0.2) !important;
 }
 
-/* Category Card Animations */
+/* Enhanced Category Card Animations */
 .category-card {
-    transition: all 0.3s ease !important;
-    animation: slideUp 0.6s ease forwards;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.05) 0%, rgba(74, 144, 226, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover::before {
+    opacity: 1;
 }
 
 .category-card:hover {
-    transform: translateY(-10px) !important;
+    transform: translateY(-12px) scale(1.03) !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Testimonial Card Animations */
-.testimonial-card {
-    animation: slideUp 0.6s ease forwards;
+.category-card .category-icon {
     transition: all 0.3s ease;
 }
 
+.category-card:hover .category-icon {
+    transform: scale(1.1) rotate(5deg);
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Enhanced Testimonial Card Animations */
+.testimonial-card {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonial-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(74, 144, 226, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    animation: rotate 3s linear infinite;
+}
+
+.testimonial-card:hover::before {
+    opacity: 1;
+}
+
 .testimonial-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.02);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
-/* Smooth Button Transitions */
+.testimonial-card .author-avatar {
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover .author-avatar {
+    transform: scale(1.1);
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Enhanced Button Animations */
 button, .btn {
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before, .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before, .btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 button:hover, .btn:hover {
-    transform: translateY(-2px) !important;
+    transform: translateY(-3px) scale(1.05) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
 }
 
 button:active, .btn:active {
-    transform: translateY(0) !important;
+    transform: translateY(-1px) scale(1.02) !important;
 }
 
-/* Input Focus Animation */
+/* Enhanced Input Focus Animation */
 input:focus, textarea:focus, select:focus {
-    animation: scaleUp 0.3s ease;
+    animation: scaleUp 0.3s ease, glow 2s ease-in-out infinite;
+    transform-origin: center;
 }
 
-/* Badge Animation */
-.badge {
-    animation: slideUp 0.6s ease 0.1s both;
-}
+/* ========== HERO SECTION TEXT FADE-IN ANIMATIONS ========== */
 
-/* Benefits Grid Animation */
-.benefit-card {
-    animation: pop 0.5s ease-out both;
-}
-
-/* Requirements List Animation */
-.requirements-list li {
-    animation: slideIn 0.5s ease forwards;
-}
-
-.requirements-list li:nth-child(1) { animation-delay: 0.1s; }
-.requirements-list li:nth-child(2) { animation-delay: 0.2s; }
-.requirements-list li:nth-child(3) { animation-delay: 0.3s; }
-.requirements-list li:nth-child(4) { animation-delay: 0.4s; }
-.requirements-list li:nth-child(5) { animation-delay: 0.5s; }
-
-/* Detail Section Animations */
-.detail-section {
-    animation: fadeIn 0.6s ease forwards;
-}
-
-.detail-section:nth-child(1) { animation-delay: 0.1s; }
-.detail-section:nth-child(2) { animation-delay: 0.2s; }
-.detail-section:nth-child(3) { animation-delay: 0.3s; }
-
-/* Hero Content Animation */
 .hero-content {
-    animation: slideUp 0.7s ease;
+    animation: fadeInUp 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
+.badge {
+    animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+}
+
+.hero-content h1 {
+    animation: fadeInUp 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both;
+}
+
+.hero-description {
+    animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s both;
+}
+
+.search-bar {
+    animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s both;
+}
+
+.popular-tags {
+    animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.1s both;
+}
+
+/* Hero Image Animation */
 .hero-card {
-    animation: slideUp 0.7s ease 0.2s both;
+    animation: slideInRightSmooth 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both;
 }
 
-/* Stats Animation */
+.hero-card img {
+    animation: scaleIn 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced Stats Animation */
 .stat-item {
-    animation: slideUp 0.6s ease forwards;
+    animation: slideUp 0.6s ease forwards, float 3s ease-in-out infinite 1s;
+    position: relative;
 }
 
 .stat-item:nth-child(1) { animation-delay: 0.1s; }
-.stat-item:nth-child(2) { animation-delay: 0.2s; }
-.stat-item:nth-child(3) { animation-delay: 0.3s; }
-.stat-item:nth-child(4) { animation-delay: 0.4s; }
+.stat-item:nth-child(2) { animation-delay: 0.3s; }
+.stat-item:nth-child(3) { animation-delay: 0.5s; }
+.stat-item:nth-child(4) { animation-delay: 0.7s; }
+
+.stat-number {
+    transition: all 0.3s ease;
+}
+
+/* Enhanced Search Bar Animation */
+.search-bar {
+    animation: slideUp 0.8s ease 0.5s both;
+    position: relative;
+}
+
+.search-bar::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 55px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.search-bar:hover::before {
+    opacity: 1;
+    animation: rotate 2s linear infinite;
+}
+
+.btn-find {
+    position: relative;
+    overflow: hidden;
+} 
+
+/* Enhanced Popular Tags Animation */
+.popular-tags {
+    animation: fadeIn 0.8s ease 0.7s both;
+}
+
+.tag {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.2), transparent);
+    transition: left 0.4s;
+}
+
+.tag:hover::before {
+    left: 100%;
+}
+
+/* Enhanced Section Headers */
+.section-header {
+    animation: slideUp 0.8s ease both;
+    position: relative;
+}
+
+.section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #4A90E2, #357ABD);
+    animation: slideIn 1s ease 0.5s both;
+}
+
+/* Enhanced Testimonials Header */
+.testimonials-header {
+    animation: slideUp 0.8s ease both;
+    text-align: center;
+}
+
+.testimonials-header h2 {
+    position: relative;
+    display: inline-block;
+}
+
+.testimonials-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #FFD700;
+    animation: slideIn 1s ease 0.8s both;
+}
 
 /* Bookmark Animation */
 .bookmark-btn {
@@ -194,7 +608,7 @@ input:focus, textarea:focus, select:focus {
     animation: pop 0.4s ease;
 }
 
-/* Header Navigation Link Animation */
+/* Enhanced Navigation Animation */
 nav a {
     transition: all 0.3s ease;
     position: relative;
@@ -207,7 +621,7 @@ nav a::after {
     left: 0;
     width: 0;
     height: 2px;
-    background: #4A90E2;
+    background: linear-gradient(90deg, #4A90E2, #357ABD);
     transition: width 0.3s ease;
 }
 
@@ -215,52 +629,122 @@ nav a:hover::after {
     width: 100%;
 }
 
-/* Page Transition Animation */
-@media (prefers-reduced-motion: no-preference) {
-    html {
-        scroll-behavior: smooth;
-    }
+/* Enhanced Logo Animation */
+.logo {
+    transition: all 0.3s ease;
 }
 
-/* Loading Pulse Animation */
-.loading {
-    animation: pulse 1.5s ease-in-out infinite;
+.logo:hover {
+    transform: scale(1.05);
 }
 
-/* Smooth Transitions on Page Load */
-body {
-    animation: fadeIn 0.5s ease;
+.logo-icon {
+    transition: all 0.3s ease;
 }
 
-/* Responsive Design Enhancements for Animations */
-@media (max-width: 1024px) {
-    .job-card {
-        animation: slideUp 0.5s ease;
-    }
-    
-    .detail-section {
-        animation: fadeIn 0.5s ease;
-    }
+.logo:hover .logo-icon {
+    animation: rotateIn 0.5s ease;
 }
 
-@media (max-width: 768px) {
-    .job-card {
-        animation: slideUp 0.4s ease;
-    }
-    
-    .hero {
-        animation: fadeIn 0.6s ease;
-    }
-    
-    .detail-section {
-        animation: fadeIn 0.4s ease;
-    }
-    
-    button {
-        transition: all 0.2s ease;
-    }
-    
-    button:hover {
-        transform: translateY(-1px);
+/* Enhanced Auth Buttons */
+.auth-buttons .btn-login {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-buttons .btn-login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.auth-buttons .btn-login:hover::before {
+    left: 100%;
+}
+
+.auth-buttons .btn-signup {
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-buttons .btn-signup::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.auth-buttons .btn-signup:hover::before {
+    left: 100%;
+}
+
+/* Enhanced Footer Animation */
+footer {
+    animation: slideUp 0.8s ease both;
+}
+
+.footer-section {
+    animation: fadeIn 0.6s ease both;
+}
+
+.footer-section:nth-child(1) { animation-delay: 0.1s; }
+.footer-section:nth-child(2) { animation-delay: 0.2s; }
+.footer-section:nth-child(3) { animation-delay: 0.3s; }
+
+/* Loading States */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4A90E2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Enhanced Focus States */
+*:focus {
+    outline: 2px solid #4A90E2;
+    outline-offset: 2px;
+    animation: glow 1s ease-in-out;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }

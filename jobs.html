@@ -6,6 +6,7 @@
     <title>Find Jobs - JobPortal</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="animations.css">
+    <script src="animations.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -26,7 +27,7 @@
     </header>
 
     <!-- Search Section -->
-    <div class="search-section">
+    <div class="search-section scroll-fade-in">
         <h2 class="search-title">Find your next dream job</h2>
         <div class="search-container">
             <div class="search-input-group">
@@ -42,9 +43,9 @@
     </div>
 
     <!-- Main Container -->
-    <div class="main-container">
+    <div class="main-container scroll-fade-in">
         <!-- Sidebar Filters -->
-        <aside class="sidebar">
+        <aside class="sidebar scroll-slide-left">
             <div class="filter-header">
                 <span class="filter-title">Filters</span>
                 <span class="clear-all" onclick="clearAllFilters()">Clear all</span>
@@ -117,7 +118,7 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="content">
+        <div class="content scroll-slide-right">
             <!-- Content Header -->
             <div class="content-header">
                 <div class="results-info">
@@ -153,9 +154,9 @@
     </div>
 
         <!-- Footer -->
-    <footer>
+    <footer class="scroll-fade-in">
         <div class="footer-content">
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <div class="footer-brand">
                     <div class="footer-logo-icon">JP</div>
                     JobPortal
@@ -168,7 +169,7 @@
                 </div>
             </div>
 
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <h4>For Job Seekers</h4>
                 <div class="footer-links">
                     <a href="jobs.html">Browse Jobs</a>
@@ -178,7 +179,7 @@
                 </div>
             </div>
 
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <h4>For Employers</h4>
                 <div class="footer-links">
                     <a href="#">Post a Job</a>
@@ -188,7 +189,7 @@
                 </div>
             </div>
 
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <h4>Our Company</h4>
                 <div class="footer-links">
                     <a href="about.html">About Us</a>
@@ -198,7 +199,7 @@
                 </div>
             </div>
 
-            <div class="footer-section">
+            <div class="footer-section scroll-slide-up">
                 <h4>Language</h4>
                 <div class="footer-links">
                     <a href="#">English (US)</a>
@@ -207,7 +208,7 @@
             </div>
         </div>
 
-        <div class="footer-bottom">
+        <div class="footer-bottom scroll-slide-up">
             <span>© 2024 JobPortal Inc. All rights reserved.</span>
             <div class="footer-bottom-right">English (US) • Cookies</div>
         </div>
