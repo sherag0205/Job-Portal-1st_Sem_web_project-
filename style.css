@@ -140,6 +140,88 @@ nav a {
     background: #E8ECFF;
 }
 
+/* Mobile Menu */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 1rem;
+}
+
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background: #333;
+    border-radius: 2px;
+    transition: all 0.3s;
+    transform-origin: center;
+}
+
+.mobile-menu-overlay {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 100%);
+    background: white;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 99;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.mobile-menu-overlay.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.5rem;
+}
+
+.mobile-nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: color 0.3s;
+}
+
+.mobile-nav a:hover {
+    color: #4A90E2;
+}
+
+.mobile-auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f0f0;
+}
+
+.mobile-auth-buttons .btn-login,
+.mobile-auth-buttons .btn-signup {
+    text-align: center;
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 8px;
+}
+
 /* Buttons */
 .btn {
     display: inline-block;
@@ -2000,14 +2082,101 @@ h2 {
     header {
         flex-wrap: wrap;
         gap: 1rem;
+        padding: 1rem;
     }
 
-    nav, .header-nav {
-        margin-left: 0;
-        order: 3;
-        width: 100%;
-        flex-wrap: wrap;
-        gap: 1rem;
+    .desktop-nav {
+        display: none;
+    }
+
+    .auth-buttons {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Improve touch targets for mobile */
+    .btn, .btn-login, .btn-signup, .search-btn, .filter-btn, .tag, .faq-item, .auth-tab-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Better mobile spacing */
+    .hero {
+        padding: 2rem 1rem;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .search-bar {
+        gap: 0.5rem;
+    }
+
+    .search-input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .popular-tags {
+        margin-top: 1rem;
+    }
+
+    .tag {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    /* Mobile form improvements */
+    .contact-form input,
+    .contact-form textarea,
+    .auth-form input {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+
+    /* Better mobile job cards */
+    .job-card {
+        padding: 1.2rem;
+    }
+
+    .job-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .job-card .company {
+        font-size: 0.9rem;
+    }
+
+    /* Mobile footer improvements */
+    .footer-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .footer-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
     }
 
     .search-bar {

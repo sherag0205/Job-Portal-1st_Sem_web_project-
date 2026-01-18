@@ -23,10 +23,34 @@
             <div class="logo-icon">JP</div>
             <span>JobPortal</span>
         </a>
-        <div style="margin-left: auto; color: #666;">
-            Don't have an account? <a href="signup.html" style="color: #4A90E2; font-weight: 600; text-decoration: none;">Sign Up Free</a>
+        <nav class="desktop-nav">
+            <a href="jobs.html">Find Jobs</a>
+            <a href="about.html">Companies</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn-login">Login</a>
+            <a href="signup.html" class="btn-signup">Sign Up Free</a>
         </div>
+        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <nav class="mobile-nav">
+            <a href="jobs.html">Find Jobs</a>
+            <a href="about.html">Companies</a>
+            <a href="contact.html">Contact</a>
+            <div class="mobile-auth-buttons">
+                <a href="login.html" class="btn-login">Login</a>
+                <a href="signup.html" class="btn-signup">Sign Up Free</a>
+            </div>
+        </nav>
+    </div>
 
     <!-- Auth Container -->
     <div class="auth-container scroll-fade-in">

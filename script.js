@@ -4,6 +4,41 @@ function toggleBookmark(element, event) {
     element.classList.toggle('active');
 }
 
+// Mobile Menu Toggle
+function initMobileMenu() {
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+
+    if (mobileMenuToggle && mobileMenuOverlay) {
+        mobileMenuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = mobileMenuOverlay.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close menu when clicking on a link
+        const mobileNavLinks = mobileMenuOverlay.querySelectorAll('a');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuToggle.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Close menu when clicking outside
+        mobileMenuOverlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                mobileMenuToggle.classList.remove('active');
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+}
+
 function performSearch() {
     const jobInput = document.getElementById('jobInput')?.value || '';
     const locationInput = document.getElementById('locationInput')?.value || '';
@@ -411,6 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initAuthHandlers();
     initSmoothScroll();
+    initMobileMenu();
     
     // Display job details if on job-detail page
     if (window.location.pathname.includes('job-detail.html')) {
