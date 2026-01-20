@@ -193,82 +193,13 @@
 
 /* ========== MOBILE SCROLL ANIMATIONS ========== */
 
-/* Mobile-optimized fade-in animation */
-.mobile-scroll-fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+/* ========== SCROLL-TRIGGERED ANIMATIONS ========== */
 
-.mobile-scroll-fade-in.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Mobile slide-up animation */
-.mobile-scroll-slide-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.mobile-scroll-slide-up.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Mobile slide-in-left animation */
-.mobile-scroll-slide-left {
-    opacity: 0;
-    transform: translateX(-25px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.mobile-scroll-slide-left.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Mobile slide-in-right animation */
-.mobile-scroll-slide-right {
-    opacity: 0;
-    transform: translateX(25px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.mobile-scroll-slide-right.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Mobile scale-in animation */
-.mobile-scroll-scale-in {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.mobile-scroll-scale-in.animate {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Mobile stagger animation for lists */
-.mobile-stagger-item {
-    opacity: 0;
-    transform: translateY(15px);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.mobile-stagger-item.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+/* Scroll Animation Classes - Lightweight for mobile performance */
 .scroll-fade-in {
     opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scroll-fade-in.animate {
@@ -278,8 +209,8 @@
 
 .scroll-slide-left {
     opacity: 0;
-    transform: translateX(-25px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(-30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scroll-slide-left.animate {
@@ -289,8 +220,8 @@
 
 .scroll-slide-right {
     opacity: 0;
-    transform: translateX(25px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scroll-slide-right.animate {
@@ -300,8 +231,8 @@
 
 .scroll-scale-up {
     opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: scale(0.85);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scroll-scale-up.animate {
@@ -311,8 +242,8 @@
 
 .scroll-rotate-in {
     opacity: 0;
-    transform: rotate(-5deg) scale(0.95);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: rotate(-8deg) scale(0.9);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scroll-rotate-in.animate {
@@ -322,8 +253,8 @@
 
 .scroll-slide-up {
     opacity: 0;
-    transform: translateY(25px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scroll-slide-up.animate {
@@ -335,7 +266,7 @@
 .stagger-item {
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .stagger-item.animate {

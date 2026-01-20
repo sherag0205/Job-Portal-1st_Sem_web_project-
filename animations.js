@@ -1,13 +1,10 @@
 // animations.js - Animation and interaction scripts for JobPortal
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Detect mobile devices
-    const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-    // Scroll-triggered animations with mobile optimization
+    // Scroll-triggered animations - lightweight version for better mobile performance
     const observerOptions = {
-        threshold: isMobile ? 0.2 : 0.1, // Higher threshold for mobile for better performance
-        rootMargin: isMobile ? '0px 0px -30px 0px' : '0px 0px -50px 0px'
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver(function(entries) {
@@ -18,22 +15,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Add scroll animation classes based on device
-    const animationClasses = isMobile ?
-        ['mobile-scroll-fade-in', 'mobile-scroll-slide-left', 'mobile-scroll-slide-right', 'mobile-scroll-scale-in', 'mobile-scroll-slide-up'] :
-        ['scroll-fade-in', 'scroll-slide-left', 'scroll-slide-right', 'scroll-scale-up', 'scroll-rotate-in', 'scroll-slide-up'];
-
-    const scrollElements = document.querySelectorAll(animationClasses.map(cls => '.' + cls).join(', '));
+    // Add scroll animation classes to elements
+    const scrollElements = document.querySelectorAll('.scroll-fade-in, .scroll-slide-left, .scroll-slide-right, .scroll-scale-up, .scroll-rotate-in, .scroll-slide-up');
     scrollElements.forEach(el => observer.observe(el));
 
-    // Stagger animations for grids with mobile optimization
+    // Stagger animations for grids
     const staggerGrids = document.querySelectorAll('.categories, .testimonials-grid');
     staggerGrids.forEach(grid => {
         const items = grid.children;
-        const staggerClass = isMobile ? 'mobile-stagger-item' : 'stagger-item';
         Array.from(items).forEach((item, index) => {
-            item.style.animationDelay = isMobile ? `${index * 0.08}s` : `${index * 0.1}s`; // Faster stagger on mobile
-            item.classList.add(staggerClass);
+            item.style.animationDelay = `${index * 0.1}s`;
+            item.classList.add('stagger-item');
             observer.observe(item);
         });
     });
