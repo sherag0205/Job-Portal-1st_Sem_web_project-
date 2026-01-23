@@ -57,29 +57,29 @@
             <aside class="dashboard-sidebar">
                 <nav class="dashboard-nav">
                     <a href="#" class="dashboard-nav-item active" onclick="showDashboardTab('saved', event)">
-                        <span class="nav-icon">♡</span>
+                        <span class="nav-icon"><!-- add icon --></span>
                         <span>Saved Jobs</span>
                         <span class="badge" id="saved-count">0</span>
                     </a>
                     <a href="#" class="dashboard-nav-item" onclick="showDashboardTab('applied', event)">
-                        <span class="nav-icon">✓</span>
+                        <span class="nav-icon"><!-- add icon --></span>
                         <span>Applied Jobs</span>
                         <span class="badge" id="applied-count">0</span>
                     </a>
                     <a href="#" class="dashboard-nav-item" onclick="showDashboardTab('alerts', event)">
-                        <span class="nav-icon">🔔</span>
+                        <span class="nav-icon"><!-- add icon --></span>
                         <span>Job Alerts</span>
                     </a>
                     <a href="#" class="dashboard-nav-item employer-only" onclick="showDashboardTab('create-job', event)">
-                        <span class="nav-icon">➕</span>
+                        <span class="nav-icon"><!-- add icon --></span>
                         <span>Post a Job</span>
                     </a>
                     <a href="#" class="dashboard-nav-item" onclick="showDashboardTab('profile', event)">
-                        <span class="nav-icon">👤</span>
+                        <span class="nav-icon"><!-- add icon --></span>
                         <span>My Profile</span>
                     </a>
                     <a href="#" class="dashboard-nav-item" onclick="showDashboardTab('settings', event)">
-                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-icon"><!-- add icon --></span>
                         <span>Settings</span>
                     </a>
                 </nav>
@@ -286,19 +286,56 @@
                     <div class="footer-logo-icon">JP</div>
                     JobPortal
                 </div>
-                <p class="footer-desc">The world's leading professional network for finding your next career milestone.</p>
+                <p class="footer-desc">The world's leading professional network for finding your next career milestone and connecting with top talent.</p>
+                <div class="footer-social">
+                    <div class="social-icon">f</div>
+                    <div class="social-icon">𝕏</div>
+                    <div class="social-icon">in</div>
+                </div>
             </div>
+
             <div class="footer-section scroll-slide-up">
-                <h4>Quick Links</h4>
+                <h4>For Job Seekers</h4>
                 <div class="footer-links">
                     <a href="jobs.html">Browse Jobs</a>
+                    <a href="#">Career Advice</a>
+                    <a href="#">Salary Tools</a>
+                    <a href="#">Resume Builder</a>
+                </div>
+            </div>
+
+            <div class="footer-section scroll-slide-up">
+                <h4>For Employers</h4>
+                <div class="footer-links">
+                    <a href="#">Post a Job</a>
+                    <a href="#">Hiring Solutions</a>
+                    <a href="#">Pricing Plans</a>
+                    <a href="#">Talent Pool</a>
+                </div>
+            </div>
+
+            <div class="footer-section scroll-slide-up">
+                <h4>Our Company</h4>
+                <div class="footer-links">
                     <a href="about.html">About Us</a>
                     <a href="contact.html">Contact</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+
+            <div class="footer-section scroll-slide-up">
+                <h4>Language</h4>
+                <div class="footer-links">
+                    <a href="#">English (US)</a>
+                    <a href="#">Cookies</a>
                 </div>
             </div>
         </div>
+
         <div class="footer-bottom scroll-slide-up">
             <span>© 2024 JobPortal Inc. All rights reserved.</span>
+            <div class="footer-bottom-right">English (US) • Cookies</div>
         </div>
     </footer>
 
@@ -361,7 +398,12 @@
                 
                 // Show selected tab
                 document.getElementById(tabName + '-tab').classList.add('active');
-                event.target.closest('.dashboard-nav-item').classList.add('active');
+                
+                // Add active class to the clicked nav item
+                const navItem = event.target.closest('.dashboard-nav-item');
+                if (navItem) {
+                    navItem.classList.add('active');
+                }
                 
                 // Remove loading
                 main.removeChild(loading);
@@ -423,21 +465,21 @@
             localStorage.setItem('darkMode', isDarkMode);
         }
 
-        function loadSavedJobs() {
-            const savedJobIds = authDB.getSavedJobs();
-            const savedJobs = jobsDatabase.filter(job => savedJobIds.includes(job.id));
-            const list = document.getElementById('saved-jobs-list');
+        function loadAppliedJobs() {
+            const appliedJobIds = authDB.getAppliedJobs();
+            const appliedJobs = jobsDatabase.filter(job => appliedJobIds.includes(job.id));
+            const list = document.getElementById('applied-jobs-list');
 
-            if(savedJobs.length === 0) {
-                document.getElementById('saved-info').textContent = 'You haven\'t saved any jobs yet';
+            if(appliedJobs.length === 0) {
+                document.getElementById('applied-info').textContent = 'You haven\'t applied to any jobs yet';
                 list.innerHTML = '';
             } else {
-                document.getElementById('saved-info').textContent = `${savedJobs.length} job(s) saved`;
-                list.innerHTML = savedJobs.map(job => `
-                    <div class="saved-job-card scroll-fade-in">
-                        <div class="saved-job-header">
+                document.getElementById('applied-info').textContent = `${appliedJobs.length} job(s) applied to`;
+                list.innerHTML = appliedJobs.map(job => `
+                    <div class="applied-job-card scroll-fade-in">
+                        <div class="applied-job-header">
                             <h3>${job.title}</h3>
-                            <button onclick="removeSavedJob('${job.id}')" class="btn-remove">✕</button>
+                            <span class="applied-status">Applied</span>
                         </div>
                         <p class="company-name">${job.company}</p>
                         <p class="job-location">${job.location}</p>
@@ -445,7 +487,7 @@
                     </div>
                 `).join('');
             }
-            document.getElementById('saved-count').textContent = savedJobs.length;
+            document.getElementById('applied-count').textContent = appliedJobs.length;
         }
 
         function loadJobAlerts() {
@@ -469,12 +511,13 @@
             }
         }
 
-        function removeSavedJob(jobId) {
+        function removeAlert(alertId) {
             try {
-                authDB.removeSavedJob(parseInt(jobId));
-                loadSavedJobs();
+                authDB.removeJobAlert(alertId);
+                loadJobAlerts();
+                showNotification('Job alert removed successfully', 'success');
             } catch (error) {
-                alert(error.message);
+                showNotification(error.message, 'error');
             }
         }
 
@@ -551,7 +594,7 @@
         function quickPostJob() {
             const user = authDB.getCurrentUser();
             if (user && user.role === 'employer') {
-                showDashboardTab('create-job', { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('create-job'"]`) });
+                showDashboardTab('create-job', { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('create-job')"]`) });
                 // Scroll to form
                 document.querySelector('.job-form').scrollIntoView({ behavior: 'smooth' });
             }
@@ -574,6 +617,7 @@
             initMobileMenu();
             updateNavigationUI();
             loadSavedJobs();
+            loadAppliedJobs();
             loadJobAlerts();
             loadUserProfile();
             loadDarkModePreference();
@@ -631,16 +675,21 @@
                     const threshold = 100;
                     
                     if (Math.abs(diffX) > threshold) {
-                        const tabs = ['saved', 'applied', 'alerts', 'profile', 'settings'];
+                        const user = authDB.getCurrentUser();
+                        let tabs = ['saved', 'applied', 'alerts', 'profile', 'settings'];
+                        if (user && user.role === 'employer') {
+                            tabs.splice(3, 0, 'create-job'); // Insert 'create-job' before 'profile'
+                        }
+                        
                         const currentTab = document.querySelector('.dashboard-tab.active').id.replace('-tab', '');
                         const currentIndex = tabs.indexOf(currentTab);
                         
                         if (diffX > 0 && currentIndex > 0) {
                             // Swipe right - previous tab
-                            showDashboardTab(tabs[currentIndex - 1], { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('${tabs[currentIndex - 1]}'"]`) });
+                            showDashboardTab(tabs[currentIndex - 1], { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('${tabs[currentIndex - 1]}')"]`) });
                         } else if (diffX < 0 && currentIndex < tabs.length - 1) {
                             // Swipe left - next tab
-                            showDashboardTab(tabs[currentIndex + 1], { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('${tabs[currentIndex + 1]}'"]`) });
+                            showDashboardTab(tabs[currentIndex + 1], { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('${tabs[currentIndex + 1]}')"]`) });
                         }
                     }
                     
@@ -680,7 +729,7 @@
                     loadSavedJobs();
                     break;
                 case 'applied':
-                    // loadAppliedJobs(); // Assuming similar function exists
+                    loadAppliedJobs();
                     break;
                 case 'alerts':
                     loadJobAlerts();
