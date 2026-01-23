@@ -67,19 +67,19 @@
                         <span class="badge" id="applied-count">0</span>
                     </a>
                     <a href="#" class="dashboard-nav-item" onclick="showDashboardTab('alerts', event)">
-                        <span class="nav-icon"><!-- add icone --></span>
+                        <span class="nav-icon">🔔</span>
                         <span>Job Alerts</span>
                     </a>
                     <a href="#" class="dashboard-nav-item employer-only" onclick="showDashboardTab('create-job', event)">
-                        <span class="nav-icon"><!-- add icone --></span>
+                        <span class="nav-icon">➕</span>
                         <span>Post a Job</span>
                     </a>
                     <a href="#" class="dashboard-nav-item" onclick="showDashboardTab('profile', event)">
-                        <span class="nav-icon"><!-- add icone --></span>
+                        <span class="nav-icon">👤</span>
                         <span>My Profile</span>
                     </a>
                     <a href="#" class="dashboard-nav-item" onclick="showDashboardTab('settings', event)">
-                        <span class="nav-icon"><!-- add icone --></span>
+                        <span class="nav-icon">⚙️</span>
                         <span>Settings</span>
                     </a>
                 </nav>
@@ -273,7 +273,12 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Floating Action Button for Mobile -->
+    <div class="fab-container" id="fabContainer" style="display: none;">
+        <button class="fab" onclick="quickPostJob()" aria-label="Quick post job">
+            <span class="fab-icon">+</span>
+        </button>
+    </div>
     <footer class="scroll-fade-in">
         <div class="footer-content">
             <div class="footer-section scroll-slide-up">
@@ -335,19 +340,32 @@
         function showDashboardTab(tabName, event) {
             event.preventDefault();
             
-            // Hide all tabs
-            document.querySelectorAll('.dashboard-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            // Show loading indicator
+            const main = document.querySelector('.dashboard-main');
+            const loading = document.createElement('div');
+            loading.className = 'loading-indicator';
+            loading.innerHTML = '<div class="spinner"></div><p>Loading...</p>';
+            main.appendChild(loading);
             
-            // Remove active from nav items
-            document.querySelectorAll('.dashboard-nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.getElementById(tabName + '-tab').classList.add('active');
-            event.target.closest('.dashboard-nav-item').classList.add('active');
+            // Simulate loading delay for better UX
+            setTimeout(() => {
+                // Hide all tabs
+                document.querySelectorAll('.dashboard-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Remove active from nav items
+                document.querySelectorAll('.dashboard-nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Show selected tab
+                document.getElementById(tabName + '-tab').classList.add('active');
+                event.target.closest('.dashboard-nav-item').classList.add('active');
+                
+                // Remove loading
+                main.removeChild(loading);
+            }, 200);
         }
 
         function createJobAlert() {
@@ -530,6 +548,26 @@
             }
         }
 
+        function quickPostJob() {
+            const user = authDB.getCurrentUser();
+            if (user && user.role === 'employer') {
+                showDashboardTab('create-job', { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('create-job'"]`) });
+                // Scroll to form
+                document.querySelector('.job-form').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Show FAB only for employers on mobile
+        function updateFABVisibility() {
+            const user = authDB.getCurrentUser();
+            const fab = document.getElementById('fabContainer');
+            if (user && user.role === 'employer' && window.innerWidth <= 768) {
+                fab.style.display = 'block';
+            } else {
+                fab.style.display = 'none';
+            }
+        }
+
         // Load saved jobs on page load
         document.addEventListener('DOMContentLoaded', () => {
             checkAuthOnDashboard();
@@ -539,7 +577,120 @@
             loadJobAlerts();
             loadUserProfile();
             loadDarkModePreference();
+            initSwipeGestures(); // Add swipe for mobile
+            updateFABVisibility();
         });
+
+        // Add swipe gestures for mobile tab navigation
+        function initSwipeGestures() {
+            if (window.innerWidth <= 768) {
+                const main = document.querySelector('.dashboard-main');
+                let startX = 0;
+                let startY = 0;
+                let isHorizontalSwipe = false;
+                let isPullToRefresh = false;
+                let pullStartY = 0;
+
+                main.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    isHorizontalSwipe = false;
+                    isPullToRefresh = false;
+                    pullStartY = e.touches[0].clientY;
+                });
+
+                main.addEventListener('touchmove', (e) => {
+                    if (!startX || !startY) return;
+                    
+                    const diffX = e.touches[0].clientX - startX;
+                    const diffY = e.touches[0].clientY - startY;
+                    
+                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                        isHorizontalSwipe = true;
+                        e.preventDefault(); // Prevent scrolling
+                    } else if (diffY > 50 && window.scrollY === 0) {
+                        isPullToRefresh = true;
+                        e.preventDefault();
+                        // Show pull indicator
+                        showPullIndicator(diffY);
+                    }
+                });
+
+                main.addEventListener('touchend', (e) => {
+                    hidePullIndicator();
+                    
+                    if (isPullToRefresh && pullStartY - e.changedTouches[0].clientY > 100) {
+                        // Trigger refresh
+                        refreshCurrentTab();
+                        return;
+                    }
+                    
+                    if (!isHorizontalSwipe) return;
+                    
+                    const diffX = e.changedTouches[0].clientX - startX;
+                    const threshold = 100;
+                    
+                    if (Math.abs(diffX) > threshold) {
+                        const tabs = ['saved', 'applied', 'alerts', 'profile', 'settings'];
+                        const currentTab = document.querySelector('.dashboard-tab.active').id.replace('-tab', '');
+                        const currentIndex = tabs.indexOf(currentTab);
+                        
+                        if (diffX > 0 && currentIndex > 0) {
+                            // Swipe right - previous tab
+                            showDashboardTab(tabs[currentIndex - 1], { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('${tabs[currentIndex - 1]}'"]`) });
+                        } else if (diffX < 0 && currentIndex < tabs.length - 1) {
+                            // Swipe left - next tab
+                            showDashboardTab(tabs[currentIndex + 1], { preventDefault: () => {}, target: document.querySelector(`[onclick*="showDashboardTab('${tabs[currentIndex + 1]}'"]`) });
+                        }
+                    }
+                    
+                    startX = 0;
+                    startY = 0;
+                    isHorizontalSwipe = false;
+                    isPullToRefresh = false;
+                });
+            }
+        }
+
+        function showPullIndicator(pullDistance) {
+            let indicator = document.querySelector('.pull-indicator');
+            if (!indicator) {
+                indicator = document.createElement('div');
+                indicator.className = 'pull-indicator';
+                indicator.innerHTML = '<div class="pull-icon">↓</div><p>Pull to refresh</p>';
+                document.body.appendChild(indicator);
+            }
+            const opacity = Math.min(pullDistance / 100, 1);
+            indicator.style.opacity = opacity;
+            indicator.style.transform = `translateY(${Math.min(pullDistance / 2, 50)}px)`;
+        }
+
+        function hidePullIndicator() {
+            const indicator = document.querySelector('.pull-indicator');
+            if (indicator) {
+                indicator.style.opacity = '0';
+                setTimeout(() => indicator.remove(), 300);
+            }
+        }
+
+        function refreshCurrentTab() {
+            const currentTab = document.querySelector('.dashboard-tab.active').id.replace('-tab', '');
+            switch(currentTab) {
+                case 'saved':
+                    loadSavedJobs();
+                    break;
+                case 'applied':
+                    // loadAppliedJobs(); // Assuming similar function exists
+                    break;
+                case 'alerts':
+                    loadJobAlerts();
+                    break;
+                case 'profile':
+                    loadUserProfile();
+                    break;
+            }
+            showNotification('Refreshed!', 'success');
+        }
     </script>
 </body>
 </html>
