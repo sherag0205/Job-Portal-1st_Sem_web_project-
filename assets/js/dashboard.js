@@ -30,38 +30,49 @@ function checkAuthOnDashboard() {
 }
 
 function showDashboardTab(tabName, event) {
-    event.preventDefault();
+    try {
+        if (event && typeof event.preventDefault === 'function') event.preventDefault();
+    } catch (e) {
+        // ignore
+    }
 
     // Show loading indicator
     const main = document.querySelector('.dashboard-main');
     const loading = document.createElement('div');
     loading.className = 'loading-indicator';
     loading.innerHTML = '<div class="spinner"></div><p>Loading...</p>';
-    main.appendChild(loading);
+    if (main) main.appendChild(loading);
 
     // Simulate loading delay for better UX
     setTimeout(() => {
-        // Hide all tabs
-        document.querySelectorAll('.dashboard-tab').forEach(tab => {
-            tab.classList.remove('active');
-        });
+        try {
+            // Hide all tabs
+            document.querySelectorAll('.dashboard-tab').forEach(tab => tab.classList.remove('active'));
 
-        // Remove active from nav items
-        document.querySelectorAll('.dashboard-nav-item').forEach(item => {
-            item.classList.remove('active');
-        });
+            // Remove active from nav items
+            document.querySelectorAll('.dashboard-nav-item').forEach(item => item.classList.remove('active'));
 
-        // Show selected tab
-        document.getElementById(tabName + '-tab').classList.add('active');
+            // Show selected tab (guard against missing element)
+            const targetTab = document.getElementById(tabName + '-tab');
+            if (targetTab) targetTab.classList.add('active');
 
-        // Add active class to the clicked nav item
-        const navItem = event.target.closest('.dashboard-nav-item');
-        if (navItem) {
-            navItem.classList.add('active');
+            // Add active class to the clicked nav item
+            let navItem = null;
+            try {
+                navItem = event && event.target && typeof event.target.closest === 'function'
+                    ? event.target.closest('.dashboard-nav-item')
+                    : null;
+            } catch (err) {
+                // Fallback: find nav item by onclick attribute
+                navItem = document.querySelector(`.dashboard-nav-item[onclick*="showDashboardTab('${tabName}')"]`);
+            }
+            if (navItem) navItem.classList.add('active');
+        } catch (err) {
+            console.error('Error switching dashboard tab:', err);
+        } finally {
+            // Ensure loading indicator is removed
+            if (loading && loading.parentNode) loading.parentNode.removeChild(loading);
         }
-
-        // Remove loading
-        main.removeChild(loading);
     }, 200);
 }
 
