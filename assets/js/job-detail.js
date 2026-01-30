@@ -1,4 +1,82 @@
 // ========== JOB DETAIL PAGE ==========
+
+// Show beautiful modal popup
+function showSuccessModal(jobTitle, companyName) {
+    const modal = document.getElementById('successModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+    
+    if (modal) {
+        modalTitle.textContent = `You've Applied to ${companyName}!`;
+        modalMessage.textContent = `Your application for ${jobTitle} at ${companyName} has been submitted successfully. The employer will review your qualifications and contact you soon!`;
+        modal.classList.add('show');
+    }
+}
+
+// Close modal
+function closeModal() {
+    const modal = document.getElementById('successModal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+}
+
+// Handle Easy Apply button click
+function handleEasyApply(jobTitle, companyName) {
+    // Add visual feedback to button
+    const applyButtons = document.querySelectorAll('.btn-primary, [onclick*="handleEasyApply"]');
+    const button = Array.from(applyButtons).find(btn => btn.getAttribute('onclick')?.includes('handleEasyApply'));
+    
+    if (button) {
+        const originalText = button.textContent;
+        button.textContent = '✓ Applied!';
+        button.disabled = true;
+        button.style.opacity = '0.7';
+    }
+    
+    // Show modal popup (center screen only)
+    showSuccessModal(jobTitle, companyName);
+    
+    // Optional: Save to applied jobs in localStorage
+    const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs') || '[]');
+    const newApplication = {
+        jobTitle,
+        companyName,
+        appliedDate: new Date().toLocaleDateString(),
+        appliedTime: new Date().toLocaleTimeString()
+    };
+    
+    // Check if already applied
+    const alreadyApplied = appliedJobs.some(job => job.jobTitle === jobTitle && job.companyName === companyName);
+    
+    if (!alreadyApplied) {
+        appliedJobs.push(newApplication);
+        localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
+    }
+}
+
+// Handle Save Job button click
+function saveJob(jobTitle) {
+    const savedJobs = JSON.parse(localStorage.getItem('savedJobs') || '[]');
+    const alreadySaved = savedJobs.includes(jobTitle);
+    
+    if (!alreadySaved) {
+        savedJobs.push(jobTitle);
+        localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
+        showNotification(`⭐ ${jobTitle} has been saved to your favorites!`, 'success');
+        
+        // Visual feedback
+        const saveButtons = document.querySelectorAll('[onclick*="saveJob"]');
+        const button = Array.from(saveButtons).find(btn => btn.getAttribute('onclick')?.includes(jobTitle));
+        if (button) {
+            button.style.backgroundColor = '#FFD700';
+            button.style.color = '#333';
+        }
+    } else {
+        showNotification(`✓ ${jobTitle} is already in your saved jobs`, 'info');
+    }
+}
+
 function displayJobDetails() {
     const job = getSelectedJob();
     if (!job) {

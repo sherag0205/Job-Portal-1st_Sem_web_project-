@@ -50,6 +50,27 @@
         </div>
     </div>
 
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header-success">
+                <div class="modal-icon-success">🎉</div>
+            </div>
+            <div class="modal-body">
+                <h2 id="modalTitle">Application Submitted!</h2>
+                <p id="modalMessage">You've successfully applied for this position. The employer will review your application and get back to you soon.</p>
+                <div class="modal-success-checkmarks">
+                    <div class="checkmark">✓ Application sent</div>
+                    <div class="checkmark">✓ Added to your profile</div>
+                    <div class="checkmark">✓ Notifications enabled</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn-primary" onclick="closeModal()">Continue Browsing</button>
+                <button class="modal-btn-secondary" onclick="window.location.href='jobs.html'">View More Jobs</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Job Detail Container -->
     <div class="job-detail-container scroll-fade-in">
         <div>
@@ -68,8 +89,8 @@
                     </div>
                 </div>
                 <div class="job-detail-actions">
-                    <button class="btn btn-primary">Apply Now</button>
-                    <button class="btn btn-secondary"><!-- add icone --> Save</button>
+                    <button class="btn btn-primary" onclick="handleEasyApply('Senior UX Designer', 'Acme Corp')">Easy Apply</button>
+                    <button class="btn btn-secondary" onclick="saveJob('Senior UX Designer')"><!-- add icone --> Save Job</button>
                 </div>
             </div>
 
